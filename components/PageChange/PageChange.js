@@ -35,7 +35,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function PageChange(props) {
+export default function PageChange(/* props */) {
   const classes = useStyles();
   return (
     <div>
