@@ -5,7 +5,7 @@ import GridItem from "components/Grid/GridItem.js";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // library used for cool animations
-import ScrollAnimation from "react-animate-on-scroll";
+/* import ScrollAnimation from "react-animate-on-scroll"; */
 
 import contentStyle from "styles/jss/nextjs-material-kit-pro/pages/presentationSections/contentStyle.js";
 
@@ -34,7 +34,7 @@ export default function SectionContent() {
             </div>
           </GridItem>
           <GridItem md={7} className={classes.mlAuto}>
-            <div className={classes.imageContainer}>
+            {/* <div className={classes.imageContainer}>
               <div className={classes.animeAreaImg}>
                 <ScrollAnimation animateIn="fadeInUp">
                   <img
@@ -58,7 +58,7 @@ export default function SectionContent() {
                 src="/img/assets-for-demo/presentationViewSectionComponent/presentation-ipad.jpg"
                 alt="iPad"
               />
-            </div>
+            </div> */}
           </GridItem>
         </GridContainer>
       </div>

@@ -32,7 +32,6 @@ const HeroLanding = () => {
           <Button
             color="primary"
             size="lg"
-            href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&ref=creativetim"
             target="_blank"
           >
             {texts['use-now.label']}

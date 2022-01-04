@@ -12,7 +12,7 @@ export const texts = {
   'landing.hero.consultobra.title': 'La solución al plan de tu Obra.',
   'landing.hero.consultobra.description': `Presupuestá, conéctate con profesionales e infórmate sobre todo lo referido a la construcción.`,
   'view-more.label': 'Ver más',
-  'use-now.label': 'Usar ahora',
+  'use-now.label': 'Empezar',
   'features.optimize-projects.title': 'Optimizá tus proyectos',
   'features.our-tools.title': 'Nuestras herramientas',
   'features.our-tools.description':
