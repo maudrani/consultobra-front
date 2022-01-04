@@ -48,8 +48,7 @@
     "compile-sass": "node-sass styles/scss/nextjs-material-kit-pro.scss styles/css/nextjs-material-kit-pro.css",
     "minify-sass": "node-sass styles/scss/nextjs-material-kit-pro.scss styles/css/nextjs-material-kit-pro.min.css --output-style compressed",
     "map-sass": "node-sass styles/scss/nextjs-material-kit-pro.scss styles/css/nextjs-material-kit-pro.css --source-map true",
-    "deploy": "npm run build && npm run export",
-    "install": "npm install --force --legacy-peer-deps"
+    "deploy": "npm run build && npm run export"
   },
   "browserslist": {
     "production": [
