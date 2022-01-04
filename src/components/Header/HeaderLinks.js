@@ -105,7 +105,7 @@ export default function HeaderLinks(props) {
                 {texts['header.contacto.text']}
               </a>
             </Link>,
-            <Link href="/about-us">
+            <Link href="/nosotros">
               <a className={classes.dropdownLink}>
                 <Person className={classes.dropdownIcons} />
                 {texts['header.sobre-nosotros.text']}

@@ -22,12 +22,14 @@ export default function ErrorPage({ ...rest }) {
   return (
     <div>
       <Header
-        absolute
-        color="transparent"
-        brand="NextJS Material Kit PRO"
-        links={<HeaderLinks dropdownHoverColor="dark" />}
-        {...rest}
-      />
+          color="transparent"
+          links={<HeaderLinks dropdownHoverColor="primary" />}
+          fixed
+          changeColorOnScroll={{
+            height: 300,
+            color: 'white'
+          }}
+        />
       <div
         className={classes.pageHeader}
         style={{
