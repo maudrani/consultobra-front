@@ -29,6 +29,7 @@ export default function ErrorPage({ ...rest }) {
             height: 300,
             color: 'white'
           }}
+          {...rest}
         />
       <div
         className={classes.pageHeader}
