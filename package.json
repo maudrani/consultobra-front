@@ -47,7 +47,8 @@
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && rm -rf .next/ && npm install && npm run dev",
     "compile-sass": "node-sass styles/scss/nextjs-material-kit-pro.scss styles/css/nextjs-material-kit-pro.css",
     "minify-sass": "node-sass styles/scss/nextjs-material-kit-pro.scss styles/css/nextjs-material-kit-pro.min.css --output-style compressed",
-    "map-sass": "node-sass styles/scss/nextjs-material-kit-pro.scss styles/css/nextjs-material-kit-pro.css --source-map true"
+    "map-sass": "node-sass styles/scss/nextjs-material-kit-pro.scss styles/css/nextjs-material-kit-pro.css --source-map true",
+    "deploy": "next build"
   },
   "browserslist": {
     "production": [
