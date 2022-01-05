@@ -9,7 +9,7 @@ import GridItem from 'components/Grid/GridItem.js'
 import PageFooter from 'src/components/footer/index'
 
 import errorPageStyle from 'styles/jss/nextjs-material-kit-pro/pages/errorPageStyles.js'
-import texts from 'content/texts'
+/* import texts from 'content/texts' */
 
 const useStyles = makeStyles(errorPageStyle)
 
@@ -22,15 +22,15 @@ export default function ErrorPage({ ...rest }) {
   return (
     <div>
       <Header
-          color="transparent"
-          links={<HeaderLinks dropdownHoverColor="primary" />}
-          fixed
-          changeColorOnScroll={{
-            height: 300,
-            color: 'white'
-          }}
-          {...rest}
-        />
+        color="transparent"
+        links={<HeaderLinks dropdownHoverColor="primary" />}
+        fixed
+        changeColorOnScroll={{
+          height: 300,
+          color: 'white'
+        }}
+        {...rest}
+      />
       <div
         className={classes.pageHeader}
         style={{
@@ -43,10 +43,15 @@ export default function ErrorPage({ ...rest }) {
         <div className={classes.contentCenter}>
           <GridContainer>
             <GridItem md={12}>
-              <h1 className={classes.title}>{texts['404.not-fount.hero-title']}</h1>
+              {/* <h1 className={classes.title}>{texts['404.not-fount.hero-title']}</h1>
               <h2 className={classes.subTitle}>{texts['404.not-fount.title']}</h2>
               <h4 className={classes.description}>
                 {texts['404.not-found.description']}
+              </h4> */}
+
+              <h2 className={classes.subTitle}>Proximamente</h2>
+              <h4 className={classes.description}>
+                Página en construccion...
               </h4>
             </GridItem>
           </GridContainer>

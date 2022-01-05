@@ -1,9 +1,10 @@
 import { LogoText } from './styled'
+import texts from 'content/texts'
 
 const TextLogo = (props) => {
   return (
     <LogoText {...props}>
-      CONSULTOBRA.
+      {texts['brand.name'].toUpperCase()}
     </LogoText>
   )
 }

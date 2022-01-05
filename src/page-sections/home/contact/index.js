@@ -20,6 +20,8 @@ import Button from "components/CustomButtons/Button.js";
 
 import contactsStyle from "styles/jss/nextjs-material-kit-pro/pages/sectionsSections/contactsStyle.js";
 
+import texts from "content/texts";
+
 const useStyles = makeStyles(contactsStyle);
 
 
@@ -46,30 +48,30 @@ export default function Contacto({ ...rest }) {
                 <div className={classes.container}>
                     <GridContainer>
                         <GridItem xs={12} sm={5} md={5}>
-                            <h2 className={classes.title}>Ponte en contacto!</h2>
+                            <h2 className={classes.title}>{texts['contact-section.title']}</h2>
                             <h5 className={classes.description}>
-                                Necesitas mas informacion? No dudes en contactarte con el equipo y managment de Consultobra. estamos para ayudarte.
+                                {texts['contact-section.description']}
                             </h5>
                             <InfoArea
                                 className={classes.infoArea}
-                                title="Nuestras Oficinas"
+                                title={texts['contact.our-offices.label']}
                                 description={
                                     <span>
-                                        Gral. Lamadrid 950, nr. 8,
-                                        <br /> Tucuman - Yerba Buena.
-                                        <br /> Argentina.
+                                        {texts['contact.address.label']}
+                                        <br /> {texts['contact.state-city.label']}
+                                        <br /> {texts['contact.country.label']}
                                     </span>
                                 }
                                 icon={PinDrop}
                             />
                             <InfoArea
                                 className={classes.infoArea}
-                                title="Llamanos"
+                                title={texts['contact.phone-us.label']}
                                 description={
                                     <span>
-                                        Gustavo Lazcano
-                                        <br /> +54 3812345678
-                                        <br /> Lunes - Viernes, 9:00-21:00
+                                        {texts['contact.contact.label']}
+                                        <br /> {texts['contact.phone-number.label']}
+                                        <br /> {texts['contact.business-attention.label']}
                                     </span>
                                 }
                                 icon={Phone}
@@ -89,7 +91,7 @@ export default function Contacto({ ...rest }) {
                                         <GridContainer>
                                             <GridItem xs={12} sm={6} md={6}>
                                                 <CustomInput
-                                                    labelText="Nombre"
+                                                    labelText={texts['name.label']}
                                                     id="first"
                                                     formControlProps={{
                                                         fullWidth: true,
@@ -98,7 +100,7 @@ export default function Contacto({ ...rest }) {
                                             </GridItem>
                                             <GridItem xs={12} sm={6} md={6}>
                                                 <CustomInput
-                                                    labelText="Apellido"
+                                                    labelText={texts['last-name.label']}
                                                     id="last"
                                                     formControlProps={{
                                                         fullWidth: true,
@@ -107,14 +109,14 @@ export default function Contacto({ ...rest }) {
                                             </GridItem>
                                         </GridContainer>
                                         <CustomInput
-                                            labelText="Direccion de Mail"
+                                            labelText={texts['email.label']}
                                             id="email-address"
                                             formControlProps={{
                                                 fullWidth: true,
                                             }}
                                         />
                                         <CustomInput
-                                            labelText="Mensaje"
+                                            labelText={texts['message.label']}
                                             id="message"
                                             formControlProps={{
                                                 fullWidth: true,
@@ -142,7 +144,7 @@ export default function Contacto({ ...rest }) {
                                                 />
                                             }
                                             classes={{ label: classes.label }}
-                                            label="No soy un robot"
+                                            label={texts['not-a-robot.label']}
                                         />
                                         <Button color="primary" className={classes.pullRight}>
                                             Enviar

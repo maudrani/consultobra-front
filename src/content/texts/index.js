@@ -9,7 +9,7 @@ export const texts = {
   'header.a-quien-llamo.text': 'A quien llamo?',
   'header.herramientas.text': 'Herramientas',
   'header.presupuesto.text': 'Presupuesto',
-  'landing.hero.consultobra.title': 'La solución al plan de tu Obra.',
+  'landing.hero.consultobra.title': 'El espacio de consulta para tu obra.',
   'landing.hero.consultobra.description': `Presupuestá, conéctate con profesionales e infórmate sobre todo lo referido a la construcción.`,
   'view-more.label': 'Ver más',
   'use-now.label': 'Empezar',
@@ -34,13 +34,28 @@ export const texts = {
   'consultobra.vision.description': `Queremos ser la empresa más buscada por los clientes, donde puedan encontrar todos aquellos
   servicios y productos relacionados con la construcción.`,
   'consultobra.valores.description': `Simplicidad, utilidad, conciencia de los costos, colaboración, integridad, calidad,
-  responsabilidad social, sistema de conexión laboral, orientación a los usuarios.`, 
+  responsabilidad social, sistema de conexión laboral, orientación a los usuarios.`,
   'main-info.description': `Mediante la simplicidad y la utilidad, queremos ser la empresa más buscada por los clientes, donde puedan encontrar todos aquellos
   servicios y productos relacionados con la construcción.`,
   'all-rights-reserved.label': 'Todos los derechos reservados.',
   '404.not-fount.hero-title': '404',
   '404.not-fount.title': 'Página no encontrada',
-  '404.not-found.description': 'No pudimos encontrar lo que buscabas.'
+  '404.not-found.description': 'No pudimos encontrar lo que buscabas.',
+  'contact-section.title': 'Ponte en contacto!',
+  'contact-section.description': 'Necesitas mas informacion? No dudes en contactarte con el equipo y managment de Consultobra. estamos para ayudarte.',
+  'contact.our-offices.label': 'Nuestras Oficinas',
+  'contact.address.label': 'Gral. Lamadrid 950, nr. 8.',
+  'contact.state-city.label': 'Tucuman - Yerba Buena.',
+  'contact.country.label': 'Argentina',
+  'contact.phone-us.label': 'Nuestras Oficinas',
+  'contact.contact.label': 'Contacto',
+  'contact.phone-number.label': '+54 3812345678',
+  'contact.business-attention.label': 'Lunes - Viernes, 9:00-21:00',
+  'name.label': 'Nombre',
+  'last-name.label': 'Apellido',
+  'email.label': 'Email',
+  'message.label': 'Mensaje',
+  'not-a-robot.label': 'No soy un robot'
 }
 
 export default texts
