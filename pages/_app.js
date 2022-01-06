@@ -25,6 +25,8 @@ import 'styles/scss/nextjs-material-kit-pro.scss?v=1.2.0'
 import 'styles/css/react-demo.css'
 import 'animate.css/animate.min.css'
 
+import { CssBaseline } from '@material-ui/core'
+
 import { ThemeProvider } from '@material-ui/styles'
 import { theme } from 'styles/jss/custom-theme'
 
@@ -64,7 +66,14 @@ export default class MyApp extends App {
 
 `)
     document.insertBefore(comment, document.documentElement)
+
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
   }
+
+
   static async getInitialProps({ Component, /* router, */ ctx }) {
     let pageProps = {}
 
@@ -74,6 +83,8 @@ export default class MyApp extends App {
 
     return { pageProps }
   }
+
+
   render() {
     const { Component, pageProps } = this.props
 
@@ -88,6 +99,7 @@ export default class MyApp extends App {
           <title>Consultobra</title>
         </Head>
         <ThemeProvider theme={theme}>
+          <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>
       </React.Fragment>
