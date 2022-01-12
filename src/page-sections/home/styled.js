@@ -1,8 +1,9 @@
 import { makeStyles, styled } from '@material-ui/core/styles'
-import landingPageStyle from 'styles/jss/nextjs-material-kit-pro/pages/landingPageStyle.js'
+import homeStyles from 'styled/pages/home'
 
-export const useStyles = makeStyles(landingPageStyle)
+export const useStyles = makeStyles(homeStyles)
 
 export const HomeContainer = styled('div')({
-    overflowX: 'hidden'
+    overflowX: 'hidden',
+    paddingBottom: '45px'
 })

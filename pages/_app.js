@@ -16,11 +16,12 @@
 
 */
 import React from 'react'
-/* import ReactDOM from 'react-dom' */
+import ReactDOM from 'react-dom'
 import App from 'next/app'
 import Head from 'next/head'
 import Router from 'next/router'
-/* import PageChange from 'components/PageChange/PageChange.js' */
+import Layout from 'page-sections/layout/index'
+import PageChange from 'components/PageChange/PageChange.js'
 import 'styles/scss/nextjs-material-kit-pro.scss?v=1.2.0'
 import 'styles/css/react-demo.css'
 import 'animate.css/animate.min.css'
@@ -30,9 +31,7 @@ import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/styles'
 import { theme } from 'styles/jss/custom-theme'
 
-
-
-/* Router.events.on('routeChangeStart', url => {
+Router.events.on('routeChangeStart', url => {
   console.log(`Loading: ${url}`)
   document.body.classList.add('body-page-transition')
   ReactDOM.render(
@@ -47,7 +46,7 @@ Router.events.on('routeChangeComplete', () => {
 Router.events.on('routeChangeError', () => {
   ReactDOM.unmountComponentAtNode(document.getElementById('page-transition'))
   document.body.classList.remove('body-page-transition')
-}) */
+})
 
 
 /* TEMPORARY FIX */
@@ -69,8 +68,8 @@ const routeChange = () => {
   tempFix();
 };
 
-Router.events.on("routeChangeComplete", routeChange );
-Router.events.on("routeChangeStart", routeChange );
+Router.events.on("routeChangeComplete", routeChange);
+Router.events.on("routeChangeStart", routeChange);
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -120,7 +119,9 @@ export default class MyApp extends App {
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Component {...pageProps} />
+          <Layout >
+            <Component {...pageProps} />
+          </Layout>
         </ThemeProvider>
       </React.Fragment>
     )

@@ -8,10 +8,10 @@ import { GridItemCentered, ImageContainer } from './styled'
 import { makeStyles } from '@material-ui/core/styles'
 import { useTheme } from '@material-ui/core'
 import { useMediaQuery } from '@material-ui/core'
-import landingPageStyle from 'styles/jss/nextjs-material-kit-pro/pages/landingPageStyle.js'
+import home from 'styled/pages/home'
 import texts from 'content/texts'
 
-const useStyles = makeStyles(landingPageStyle)
+const useStyles = makeStyles(home)
 
 const HeroLanding = () => {
   const classes = useStyles()
