@@ -19,15 +19,21 @@ const useStyles = makeStyles(styles);
 
 export default function NavPills(props) {
   const [active, setActive] = React.useState(props.active);
+
+  const { tabs, color, horizontal, alignCenter, onChange } = props;
+
   const handleChange = (event, active) => {
     setActive(active);
+    onChange && onChange(tabs[active])
   };
-  const { tabs, color, horizontal, alignCenter } = props;
+
+
   const classes = useStyles();
   const flexContainerClasses = classNames({
     [classes.flexContainer]: true,
     [classes.horizontalDisplay]: horizontal !== undefined,
   });
+
   const tabButtons = (
     <Tabs
       classes={{
@@ -65,6 +71,7 @@ export default function NavPills(props) {
       })}
     </Tabs>
   );
+
   const tabContent = (
     <div className={classes.contentWrapper}>
       {tabs.map((prop, key) => {
@@ -80,6 +87,7 @@ export default function NavPills(props) {
       })}
     </div>
   );
+
   return horizontal !== undefined ? (
     <GridContainer>
       <GridItem {...horizontal.tabsGrid}>{tabButtons}</GridItem>
