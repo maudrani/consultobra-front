@@ -13,7 +13,7 @@ import Tabs from "@material-ui/core/Tabs";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 
-import styles from "styles/jss/nextjs-material-kit-pro/components/NavPillsStyle.js";
+import styles from "styles/jss/nextjs-material-kit-pro/components/navPillsStyle.js";
 
 const useStyles = makeStyles(styles);
 
