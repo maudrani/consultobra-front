@@ -39,7 +39,7 @@ export default function AuthorSection(props) {
                   </>}
               </div>
             </GridItem>
-            <GridItem xs={12} sm={6} md={6}>
+           {/*  <GridItem xs={12} sm={6} md={6}>
               <Button color="google" round className={classes.buttons}>
                 <i className="fab fa-google" /> 232
               </Button>
@@ -49,7 +49,7 @@ export default function AuthorSection(props) {
               <Button color="facebook" round className={classes.buttons}>
                 <i className="fab fa-facebook-square" /> 872
               </Button>
-            </GridItem>
+            </GridItem> */}
           </GridContainer>
           <hr />
           <Card plain profile className={classes.card}>
