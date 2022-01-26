@@ -1,24 +1,30 @@
-import React from 'react';
-import Header from 'components/Header/Header.js'
-import HeaderLinks from 'components/Header/HeaderLinks.js'
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { GET_ROUTE_TYPE, ROUTE_TYPES } from 'constants/routes';
+
+import { useSnapshot } from 'valtio';
+import { layoutStates, restoreLayout, setAppLayout } from './states';
+
+import PageHeader from 'components/Header';
 import PageFooter from 'src/components/footer'
 
-const PageLayout = ({ children, rest }) => {
+const PageLayout = ({ children }) => {
+    const { header, footer } = useSnapshot(layoutStates)
+    const Router = useRouter()
+
+    useEffect(() => {
+        restoreLayout()
+        if (GET_ROUTE_TYPE[Router.pathname] === ROUTE_TYPES.APP) setAppLayout()
+    }, [Router.pathname])
+
+
+
     return (<>
-        <Header
-            color="transparent"
-            links={<HeaderLinks dropdownHoverColor="primary" />}
-            fixed
-            changeColorOnScroll={{
-                height: 300,
-                color: 'white'
-            }}
-            {...rest}
-        />
+        {header.show && <PageHeader fixed={header.fixed} />}
 
         {children}
 
-        <PageFooter />
+        {footer.show && <PageFooter />}
     </>);
 }
 

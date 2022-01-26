@@ -6,18 +6,23 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button.js";
 import Footer from "components/Footer/Footer.js";
 
+import { layoutStates } from "page-sections/layout/states";
+import { useSnapshot } from "valtio";
+
 import styles from "styles/jss/nextjs-material-kit-pro/pages/componentsSections/footerStyle.js";
 import texts from 'content/texts';
 
 const useStyles = makeStyles(styles);
 
-const PageFooter = () => {
+const PageFooter = (props) => {
     const classes = useStyles()
+
+    const {footer} = useSnapshot(layoutStates)
 
     return <Footer
         content={
             <div>
-                <ul className={classes.socialButtons}>
+                {!props.hideSocialMedia && footer.showSocialMedia && <ul className={classes.socialButtons}>
                     <li>
                         <Button justIcon simple href="#insta" color="instagram">
                             <i className="fab fa-instagram" />
@@ -28,7 +33,7 @@ const PageFooter = () => {
                             <i className="fab fa-facebook-square" />
                         </Button>
                     </li>
-                </ul>
+                </ul>}
                 <div
                     className={classNames(classes.pullCenter, classes.copyRight)}
                 >

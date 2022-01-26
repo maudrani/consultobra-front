@@ -17,7 +17,7 @@ import texts from 'content/texts';
 
 const useStyles = makeStyles(blogStyles);
 
-const MainPosts = ({articles}) => {
+const MainPosts = ({ articles }) => {
     const classes = useStyles();
 
     React.useEffect(() => {
@@ -42,9 +42,7 @@ const MainPosts = ({articles}) => {
                     <h6 className={classes.cardCategory}>{category.name.toUpperCase()}</h6>
                     <Link href={article_link} passHref>
                         <a href='#' onClick={(e) => e.preventDefault()}>
-                            <h3 className={classes.cardTitleWhite}>
-                                {title}
-                            </h3>
+                            <h3 className={classes.cardTitleWhite} dangerouslySetInnerHTML={{ __html: title }} />
                         </a>
                     </Link>
                     <p className={classes.cardDescription}>

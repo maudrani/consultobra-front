@@ -125,7 +125,7 @@ export default function HeaderLinks(props) {
             color: 'transparent'
           }}
           dropdownList={[
-            <Link href="/costos">
+            <Link href="/analisis-costos">
               <a
                 className={classes.dropdownLink}
                 onClick={e => smoothScroll(e, 'headers')}
