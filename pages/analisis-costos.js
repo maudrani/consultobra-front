@@ -1,11 +1,10 @@
-/*eslint-disable*/
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { globalStates } from "states";
 import { costosStates, handleCategoryChange, initialFilters, parseUrlQueriesToState } from "page-sections/analisis-costos/states";
 import { generateUrlQuery } from "helpers/hooks/routing";
-import { useSnapshot } from "valtio";
+import { useSnapshot, subscribe } from "valtio";
 import { isEmpty, isEqual } from "lodash";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -34,7 +33,7 @@ export async function getServerSideProps({ query }) {
 }
 
 const AnalisisCostos = ({ items, rubros, query }) => {
-  const { filters, rowsPerPage, tablePage } = useSnapshot(costosStates)
+  const { filters } = useSnapshot(costosStates)
   const classes = useStyles();
   const Router = useRouter()
 
@@ -53,17 +52,12 @@ const AnalisisCostos = ({ items, rubros, query }) => {
 
   }, [])
 
-  useEffect(() => {
-    handleCategoryChange(items)
-  }, [filters.category])
+  useEffect(() => handleCategoryChange(), [filters.category])
 
-  useEffect(() => {
-    const dependenciesObj = { filters, tablePage, rowsPerPage }
-
-    if (!isEqual(dependenciesObj, initialFilters))
-      Router.push(generateUrlQuery({ ...filters, tablePage, rowsPerPage }, initialFilters), undefined, { shallow: true })
-      Router.replace(Router.asPath);
-  }, [filters, tablePage, rowsPerPage])
+  useEffect(() => subscribe(costosStates.filters, () => {
+    if (!isEqual(costosStates.filters, initialFilters))
+      Router.push(generateUrlQuery(costosStates.filters, initialFilters), undefined, { shallow: true })
+  }), [filters])
 
 
   return (

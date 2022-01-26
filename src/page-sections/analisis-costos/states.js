@@ -1,32 +1,29 @@
-import { proxy } from "valtio";
+import { proxy, subscribe } from "valtio";
 
 export const initialFilters = {
-    filters: {},
     tablePage: 0,
-    rowsPerPage: 10
+    rowsPerPage: 10,
+    category: 99
+}
+
+export const resetPage = () => {
+    costosStates.filters.tablePage = 0;
 }
 
 export const costosStates = proxy({
     items: [],
     filtered_items: [],
     rubros: [],
-    ...initialFilters
+    filters: initialFilters,
+    queryString: '',
+    resetPage
 })
 
-const tableFilters = {
-    category: 'category',
-    search: 'search',
-}
-
-export const resetPage = () => {
-    costosStates.tablePage = 0;
-}
-
-export const handleCategoryChange = (items) => {
-    costosStates.filtered_items = items.filter(item => {
+export const handleCategoryChange = () =>
+    subscribe(costosStates.filters, () => costosStates.filtered_items = costosStates.items.filter(item => {
         return item.category.id === costosStates.filters.category
-    })
-}
+    }))
+
 
 export const parseUrlQueriesToState = (query) => {
     const dataParser = {
@@ -37,11 +34,6 @@ export const parseUrlQueriesToState = (query) => {
     }
 
     for (let q in query) {
-        if (tableFilters[q]) {
-            costosStates.filters[q] = dataParser[q]
-        } else {
-            costosStates[q] = dataParser[q]
-        }
+        costosStates.filters[q] = dataParser[q]
     }
 }
-

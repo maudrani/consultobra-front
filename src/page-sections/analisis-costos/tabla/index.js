@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 // States
 import { useSnapshot } from 'valtio';
-import { costosStates, resetPage } from "page-sections/analisis-costos/states";
+import { costosStates } from "page-sections/analisis-costos/states";
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles'
 // core components
@@ -16,15 +16,15 @@ const useStyles = makeStyles(style)
 
 const TablaAnalisisCostos = () => {
   const classes = useStyles()
-  const { rowsPerPage, tablePage, filtered_items, items } = useSnapshot(costosStates)
+  const { filters, filtered_items, items } = useSnapshot(costosStates)
 
   const handleChangePage = (event, newPage) => {
-    costosStates.tablePage = newPage
+    costosStates.filters.tablePage = newPage
   };
 
   const handleChangeRowsPerPage = (event) => {
-    costosStates.rowsPerPage = parseInt(event.target.value, 10)
-    resetPage()
+    costosStates.filters.rowsPerPage = parseInt(event.target.value, 10)
+    costosStates.resetPage()
   };
 
   function paginate(array, page_size, page_number) {
@@ -38,7 +38,7 @@ const TablaAnalisisCostos = () => {
     <Fragment>
       <Table
         tableHead={['Item', 'Unidad', 'Materiales', 'Mano de obra', 'Costo Unitario', 'Detalle']}
-        tableData={paginate(tableData, rowsPerPage, (tablePage + 1))}
+        tableData={paginate(tableData, filters.rowsPerPage, (filters.tablePage + 1))}
         customHeadCellClasses={[
           classes.textLeft,
           classes.textCenter,
@@ -61,8 +61,8 @@ const TablaAnalisisCostos = () => {
 
       <TablePagination
         count={tableData.length}
-        page={tablePage}
-        rowsPerPage={rowsPerPage}
+        page={filters.tablePage}
+        rowsPerPage={filters.rowsPerPage}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         rowsPerPageOptions={[5, 10, 15]}

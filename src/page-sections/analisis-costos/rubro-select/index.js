@@ -1,6 +1,6 @@
 import React from 'react';
 // State
-import { costosStates, resetPage } from '../states';
+import { costosStates } from '../states';
 import { useSnapshot } from 'valtio';
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,7 +17,7 @@ const RubroSelect = () => {
 
     const handleChange = (event) => {
         costosStates.filters.category = event.target.value
-        resetPage()
+        costosStates.resetPage()
     };
 
     const Options = rubros.map(rubro => <MenuItem

@@ -8,7 +8,8 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "next",
-    "next/core-web-vitals"
+    "next/core-web-vitals",
+    "plugin:valtio/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,6 +21,14 @@
   "plugins": ["react"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "no-unused-vars": 2
+    "no-unused-vars": 1,
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ]
   }
 }
