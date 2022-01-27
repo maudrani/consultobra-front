@@ -8,6 +8,11 @@ export const layoutStates = proxy({
     footer: {
         show: true,
         showSocialMedia: true,
+    },
+    errorMessage: {
+        show: false,
+        color: '',
+        message: '',
     }
 })
 

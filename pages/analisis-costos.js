@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { globalStates } from "states";
-import { costosStates, handleCategoryChange, initialFilters, parseUrlQueriesToState } from "page-sections/analisis-costos/states";
-import { generateUrlQuery } from "helpers/hooks/routing";
-import { useSnapshot, subscribe } from "valtio";
-import { isEmpty, isEqual } from "lodash";
+import { costosStates, handleFilters, parseUrlQueriesToState, initialFilters } from "page-sections/analisis-costos/states";
+import { pushShallowQuery } from "helpers/routing";
+import { useSnapshot } from "valtio";
+import { isEmpty } from "lodash";
 
 import { makeStyles } from "@material-ui/core/styles";
 import costosPageStyle from "styled/pages/costos";
@@ -33,7 +33,7 @@ export async function getServerSideProps({ query }) {
 }
 
 const AnalisisCostos = ({ items, rubros, query }) => {
-  const { filters } = useSnapshot(costosStates)
+  const { filters } = useSnapshot(costosStates, { sync: true })
   const classes = useStyles();
   const Router = useRouter()
 
@@ -45,6 +45,7 @@ const AnalisisCostos = ({ items, rubros, query }) => {
   useEffect(() => {
     costosStates.rubros = rubros
     costosStates.items = items
+    costosStates.filtered_items = items
 
     if (!isEmpty(query)) {
       parseUrlQueriesToState(query)
@@ -52,13 +53,10 @@ const AnalisisCostos = ({ items, rubros, query }) => {
 
   }, [])
 
-  useEffect(() => handleCategoryChange(), [filters.category])
-
-  useEffect(() => subscribe(costosStates.filters, () => {
-    if (!isEqual(costosStates.filters, initialFilters))
-      Router.push(generateUrlQuery(costosStates.filters, initialFilters), undefined, { shallow: true })
-  }), [filters])
-
+  useEffect(() => {
+    handleFilters()
+    pushShallowQuery(Router, filters, initialFilters)
+  }, [filters])
 
   return (
     <div

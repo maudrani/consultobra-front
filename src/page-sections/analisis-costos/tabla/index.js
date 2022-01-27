@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react'
+import { useRouter } from 'next/router';
 // States
 import { useSnapshot } from 'valtio';
-import { costosStates } from "page-sections/analisis-costos/states";
+import { costosStates, initialTableValues } from "page-sections/analisis-costos/states";
+import { pushShallowQuery } from 'helpers/routing';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles'
 // core components
@@ -16,29 +18,32 @@ const useStyles = makeStyles(style)
 
 const TablaAnalisisCostos = () => {
   const classes = useStyles()
-  const { filters, filtered_items, items } = useSnapshot(costosStates)
+  const { tableValues, filtered_items } = useSnapshot(costosStates)
+  const Router = useRouter()
 
   const handleChangePage = (event, newPage) => {
-    costosStates.filters.tablePage = newPage
+    costosStates.tableValues.tablePage = newPage
+    pushShallowQuery(Router, { tablePage: newPage }, initialTableValues)
   };
 
   const handleChangeRowsPerPage = (event) => {
-    costosStates.filters.rowsPerPage = parseInt(event.target.value, 10)
+    costosStates.tableValues.rowsPerPage = parseInt(event.target.value, 10)
     costosStates.resetPage()
+    pushShallowQuery(Router, { rowsPerPage: event.target.value }, initialTableValues)
   };
 
   function paginate(array, page_size, page_number) {
     return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 
-  const tableData = (filtered_items.length !== 0 ? filtered_items : items)
+  const tableData = filtered_items
     .map(item => [item.name, item.unit, `$ ${item.values.materials}`, `$ ${item.values.manufacture}`, '$ 0', 'detalle'])
 
   return (
     <Fragment>
       <Table
         tableHead={['Item', 'Unidad', 'Materiales', 'Mano de obra', 'Costo Unitario', 'Detalle']}
-        tableData={paginate(tableData, filters.rowsPerPage, (filters.tablePage + 1))}
+        tableData={paginate(tableData, tableValues.rowsPerPage, (tableValues.tablePage + 1))}
         customHeadCellClasses={[
           classes.textLeft,
           classes.textCenter,
@@ -61,8 +66,8 @@ const TablaAnalisisCostos = () => {
 
       <TablePagination
         count={tableData.length}
-        page={filters.tablePage}
-        rowsPerPage={filters.rowsPerPage}
+        page={tableValues.tablePage}
+        rowsPerPage={tableValues.rowsPerPage}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         rowsPerPageOptions={[5, 10, 15]}
