@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { globalStates } from "states";
-import { costosStates, handleFilters, parseUrlQueriesToState, initialFilters, initialTableValues, filterITemsByQuery } from "page-sections/analisis-costos/states";
+import { costosStates, initialFilters, initialTableValues, filterItemsByQuery, queryToState } from "page-sections/analisis-costos/states";
 import { pushShallowQuery } from "helpers/routing";
 import { useSnapshot } from "valtio";
-import { isEmpty, isEqual } from "lodash";
 
 import { makeStyles } from "@material-ui/core/styles";
 import costosPageStyle from "styled/pages/costos";
@@ -23,16 +22,20 @@ import PageFooter from "components/footer";
 const useStyles = makeStyles(costosPageStyle);
 
 export async function getServerSideProps({ query }) {
+  const DB = {
+    items: await globalStates.COSTOS.getItemsCostos(),
+    rubros: await globalStates.RUBROS.getRubros(),
+  }
+
   return {
     props: {
-      items: await globalStates.COSTOS.getItemsCostos(),
-      rubros: await globalStates.RUBROS.getRubros(),
-      query,
+      DB,
+      initialQuery: query
     }
   }
 }
 
-const AnalisisCostos = ({ items, rubros, query }) => {
+const AnalisisCostos = ({ DB, initialQuery }) => {
   const { filters, tableValues } = useSnapshot(costosStates)
   const classes = useStyles();
   const Router = useRouter()
@@ -43,19 +46,16 @@ const AnalisisCostos = ({ items, rubros, query }) => {
   })
 
   useEffect(() => {
-    costosStates.rubros = rubros
-    costosStates.items = items
-    costosStates.filtered_items = filterITemsByQuery(items, query)
+    costosStates.rubros = DB.rubros
+    costosStates.items = filterItemsByQuery(DB.items, initialQuery)
 
-    if (!isEmpty(query)) {
-      parseUrlQueriesToState(query)
-    }
+    queryToState(initialQuery)
 
-  }, [])
+  }, [DB, initialQuery])
 
   useEffect(() => {
-    handleFilters()
-  }, [filters])
+    costosStates.items = filterItemsByQuery(DB.items, Router.query)
+  }, [Router.query, DB])
 
   useEffect(() => {
     const newValues = { ...costosStates.filters, ...costosStates.tableValues }

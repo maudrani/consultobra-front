@@ -17,7 +17,7 @@ const useStyles = makeStyles(style)
 
 const TablaAnalisisCostos = () => {
   const classes = useStyles()
-  const { tableValues, filtered_items } = useSnapshot(costosStates)
+  const { tableValues, items } = useSnapshot(costosStates)
 
   const handleChangePage = (event, newPage) => {
     costosStates.tableValues.tablePage = newPage
@@ -28,7 +28,7 @@ const TablaAnalisisCostos = () => {
     costosStates.resetPage()
   };
 
-  const tableData = filtered_items
+  const tableData = items
     .map(item => [item.name, item.unit, `$ ${item.values.materials}`, `$ ${item.values.manufacture}`, '$ 0', 'detalle'])
 
   return (

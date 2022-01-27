@@ -9,7 +9,7 @@ import SearchIcon from "@material-ui/icons/Search";
 
 const SearchInput = () => {
     const { filters } = useSnapshot(costosStates, { sync: true })
-    const [inputValue, setInputValue] = useState()
+    const [inputValue, setInputValue] = useState('')
 
     useEffect(() => setInputValue(costosStates.filters.search), [filters.search])
 
@@ -37,7 +37,7 @@ const SearchInput = () => {
                     </InputAdornment>
                 ),
                 onChange: handleChange,
-                value: inputValue || costosStates.filters.search
+                value: inputValue || ''
             }}
         />
     </form>

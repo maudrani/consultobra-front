@@ -9,22 +9,28 @@ export const generateUrlQuery = (query = {}, initialValues = {}) => {
     return queryString.slice(0, -1)
 }
 
-export const pushShallowQuery = (router, query, initialQuery) => {
-    if (!initialQuery) {
-        router.push({ query: { ...router.query, ...query } }, undefined, { shallow: true })
-        return
+export const compareQueries = (newQuery, oldQuery) => {
+    if (!oldQuery) {
+        return newQuery
     }
 
     let parsedQuery = {}
 
-    for (let q in query) {
-        delete router.query[q]
-        if (query[q] != initialQuery[q]) {
-            parsedQuery[q] = query[q]
+    const parsedString = string => parseInt(string) || string
+
+    for (let q in newQuery) {
+        if (parsedString(newQuery[q]) != parsedString(oldQuery[q])) {
+            parsedQuery[q] = parsedString(newQuery[q])
         }
     }
 
-    router.push({ query: { ...router.query, ...parsedQuery } }, undefined, { shallow: true })
+    return parsedQuery
+}
+
+export const pushShallowQuery = (router, newQuery, oldQuery) => {
+    const parsedQuery = compareQueries(newQuery, oldQuery)
+
+    router.push({ query: { ...parsedQuery } }, undefined, { shallow: true })
 }
 
 export const pushShallowQueries = ({ Router, newValues, initialValues }) => {
