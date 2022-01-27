@@ -4,14 +4,16 @@ import Header from 'components/Header/Header.js'
 import HeaderLinks from 'components/Header/HeaderLinks.js'
 
 const PageHeader = ({ rest, fixed }) => {
+    const scrollEffects = fixed ? {
+        height: 300,
+        color: 'white'
+    } : {}
+
     return (<Header
         color="transparent"
         links={<HeaderLinks dropdownHoverColor="primary" />}
         fixed={fixed}
-        changeColorOnScroll={{
-            height: 300,
-            color: 'white'
-        }}
+        changeColorOnScroll={scrollEffects}
         {...rest}
     />);
 }

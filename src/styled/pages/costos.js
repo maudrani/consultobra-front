@@ -26,7 +26,7 @@ const costosPageStyle = (theme) => ({
         ...mainRaised,
         margin: '0',
         width: '80%',
-        minHeight: '65vh',
+        minHeight: '80vh',
         overflow: 'auto',
         [theme.breakpoints.down("sm")]: {
             width: '100%'

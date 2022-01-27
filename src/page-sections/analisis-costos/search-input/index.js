@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { costosStates } from '../states';
-import { useSnapshot, subscribe } from 'valtio';
+import { useSnapshot } from 'valtio';
 
 import CustomInput from "components/input";
 import { InputAdornment } from "@material-ui/core";
@@ -9,13 +9,17 @@ import SearchIcon from "@material-ui/icons/Search";
 
 const SearchInput = () => {
     const { filters } = useSnapshot(costosStates, { sync: true })
-    const [inputValue, setInputValue] = useState('')
+    const [inputValue, setInputValue] = useState()
 
-    useEffect(() => subscribe(costosStates.filters, () => setInputValue(costosStates.filters.search)), [filters.search])
+    useEffect(() => setInputValue(costosStates.filters.search), [filters.search])
 
     const handleSubmit = (e) => {
         e.preventDefault()
         costosStates.filters.search = inputValue
+    }
+
+    const handleChange = (e) => {
+        setInputValue(e.target.value)
     }
 
     return <form onSubmit={handleSubmit}>
@@ -32,8 +36,8 @@ const SearchInput = () => {
                         <SearchIcon />
                     </InputAdornment>
                 ),
-                onChange: (e) => setInputValue(e.target.value),
-                value: inputValue
+                onChange: handleChange,
+                value: inputValue || costosStates.filters.search
             }}
         />
     </form>
