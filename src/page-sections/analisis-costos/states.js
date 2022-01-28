@@ -1,5 +1,6 @@
 import { proxy } from "valtio";
 import { isEmpty } from "lodash";
+import { compareTwoStrings } from 'string-similarity'
 
 export const initialFilters = {
     category: 99,
@@ -23,8 +24,6 @@ export const costosStates = proxy({
     resetPage
 })
 
-
-
 const queryCategory = (item, query) => {
     if (!query.category) return true
     if (parseInt(query.category) === initialFilters.category) return true
@@ -32,12 +31,17 @@ const queryCategory = (item, query) => {
     return item.category.id === parseInt(query.category)
 }
 
+const stringForPairing = string => string.toLowerCase().trim().normalize("NFD").replace(/\p{Diacritic}/gu, "")
+
 const querySearch = (item, query) => {
     if (!query.search) return true
     if (query.search === initialFilters.search) return true
 
-    const stringForPairing = string => string.toLowerCase().trim()
-    return stringForPairing(item.name).includes(stringForPairing(query.search))
+    const searchByInclude = stringForPairing(item.name).includes(stringForPairing(query.search))
+
+    const searchByProx = (prox) => compareTwoStrings(item.name, query.search) > prox
+
+    return searchByInclude || searchByProx(0.12)
 }
 
 const itemMatches = {
@@ -45,12 +49,37 @@ const itemMatches = {
     category: queryCategory,
 }
 
-export const filterItemsByQuery = (items, query) => {
-    if (isEmpty(query)) return items
 
-    return items.filter(item => {
+export const filterItemsByQuery = (items, query) => {
+    if (isEmpty(query) || items.length === 0) return items
+
+    let filteredItems = items.filter(item => {
         return (itemMatches.search(item, query) && itemMatches.category(item, query))
     })
+
+
+    if (query.search) {
+        filteredItems.sort((a, b) => {
+            let maxLength = a.name.length > b.name.length ? a.name.length : b.name.length
+
+            const filledString = str => str.padEnd(maxLength, '?')
+
+            if(stringForPairing(a.name[0]) === stringForPairing(query.search[0])) {
+                return -1
+            } 
+
+            if(stringForPairing(b.name[0]) === stringForPairing(query.search[0])) {
+                return 1
+            } 
+ 
+
+            const proximityOf = str => compareTwoStrings(stringForPairing(filledString(str)), stringForPairing(query.search))
+
+            return proximityOf(a.name) > proximityOf(b.name) ? -1 : 1
+        })
+    }
+
+    return filteredItems
 }
 
 export const queryToState = (initialQuery) => {

@@ -17,6 +17,7 @@ import RubroSelect from "page-sections/analisis-costos/rubro-select";
 import SearchInput from "page-sections/analisis-costos/search-input";
 import TablaAnalisisCostos from "page-sections/analisis-costos/tabla";
 import PageFooter from "components/footer";
+import { isEqual } from "lodash";
 
 
 const useStyles = makeStyles(costosPageStyle);
@@ -40,6 +41,8 @@ const AnalisisCostos = ({ DB, initialQuery }) => {
   const classes = useStyles();
   const Router = useRouter()
 
+  const {query} = Router
+
   React.useEffect(() => {
     window.scrollTo(0, 0)
     document.body.scrollTop = 0
@@ -48,14 +51,12 @@ const AnalisisCostos = ({ DB, initialQuery }) => {
   useEffect(() => {
     costosStates.rubros = DB.rubros
     costosStates.items = filterItemsByQuery(DB.items, initialQuery)
-
     queryToState(initialQuery)
-
   }, [DB, initialQuery])
 
   useEffect(() => {
-    costosStates.items = filterItemsByQuery(DB.items, Router.query)
-  }, [Router.query, DB])
+    costosStates.items = filterItemsByQuery(DB.items, query)
+  }, [query.category, query.search, DB])
 
   useEffect(() => {
     const newValues = { ...costosStates.filters, ...costosStates.tableValues }
@@ -77,7 +78,6 @@ const AnalisisCostos = ({ DB, initialQuery }) => {
       <PageHeader />
 
       <div className={classes.main}>
-
         <div className={classes.container}>
 
           <GridContainer container>

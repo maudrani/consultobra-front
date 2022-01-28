@@ -16,6 +16,7 @@ const SearchInput = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         costosStates.filters.search = inputValue
+        costosStates.resetPage()
     }
 
     const handleChange = (e) => {
@@ -33,7 +34,7 @@ const SearchInput = () => {
             inputProps={{
                 endAdornment: (
                     <InputAdornment position="end">
-                        <SearchIcon />
+                        <SearchIcon style={{cursor: 'pointer'}} onClick={handleSubmit} />
                     </InputAdornment>
                 ),
                 onChange: handleChange,
