@@ -17,8 +17,6 @@ import RubroSelect from "page-sections/analisis-costos/rubro-select";
 import SearchInput from "page-sections/analisis-costos/search-input";
 import TablaAnalisisCostos from "page-sections/analisis-costos/tabla";
 import PageFooter from "components/footer";
-import { isEqual } from "lodash";
-
 
 const useStyles = makeStyles(costosPageStyle);
 
