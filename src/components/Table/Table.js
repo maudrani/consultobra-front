@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 import cx from "classnames";
 import PropTypes from "prop-types";
 
@@ -20,10 +20,23 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import styles from "styles/jss/nextjs-material-kit-pro/components/tableStyle.js";
 
 const useStyles = makeStyles(styles);
+const TableContext = createContext({})
 
 export const CollapsibleRow = (props) => {
-  const { children, collapsedChildren,  } = props;
+  const { children, collapsedChildren } = props;
   const [open, setOpen] = useState(false);
+  const { collapseAllRows, setCollapseAllRows } = useContext(TableContext)
+
+
+  useEffect(() => {
+    collapseAllRows && setOpen(false)
+  }, [collapseAllRows])
+
+  const handleOpenRow = () => {
+    setOpen(!open)
+    setCollapseAllRows(false)
+  }
+
 
   return (
     <React.Fragment>
@@ -32,7 +45,7 @@ export const CollapsibleRow = (props) => {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)}
+            onClick={handleOpenRow}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -52,6 +65,7 @@ export const CollapsibleRow = (props) => {
   );
 }
 
+
 export default function CustomTable(props) {
   const {
     tableHead,
@@ -70,124 +84,32 @@ export default function CustomTable(props) {
 
   } = props;
   const classes = useStyles();
+
+  const [collapseAllRows, setCollapseAllRows] = useState(false)
+
+  useEffect(() => {
+    setCollapseAllRows(true)
+  }, [tableData])
+
   return (
-    <div className={classes.tableResponsive}>
-      <Table className={classes.table}>
-        {tableHead !== undefined ? (
-          <TableHead className={classes[tableHeaderColor]}>
-            <TableRow className={classes.tableRow}>
-              {collapsibleRows && <TableCell />}
-              {tableHead.map((prop, key) => {
-                const tableCellClasses =
-                  classes.tableHeadCell +
-                  " " +
-                  classes.tableCell +
-                  " " +
-                  cx({
-                    [customHeadCellClasses[
-                      customHeadClassesForCells.indexOf(key)
-                    ]]: customHeadClassesForCells.indexOf(key) !== -1,
-                    [classes.tableShoppingHead]: tableShopping,
-                  });
-                return (
-                  <TableCell className={tableCellClasses} key={key}>
-                    {prop}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          </TableHead>
-        ) : null}
-        <TableBody>
-          {tableData.map((prop, key) => {
-            var rowColor = "";
-            var rowColored = false;
-            if (prop.color !== undefined) {
-              rowColor = prop.color;
-              rowColored = true;
-              prop = prop.data;
-            }
-            const tableRowClasses = cx({
-              [classes.tableRowHover]: hover,
-              [classes[rowColor + "Row"]]: rowColored,
-              [classes.tableStripedRow]: striped && key % 2 === 0,
-            });
-
-            const SelectedRow = collapsibleRows ? CollapsibleRow : TableRow
-
-            if (prop.total) {
-              return (
-                <SelectedRow key={key} hover={hover} className={tableRowClasses}>
-                  <TableCell
-                    className={classes.tableCell}
-                    colSpan={prop.colspan}
-                  />
-                  <TableCell
-                    className={classes.tableCell + " " + classes.tableCellTotal}
-                  >
-                    Total
-                  </TableCell>
-                  <TableCell
-                    className={
-                      classes.tableCell + " " + classes.tableCellAmount
-                    }
-                  >
-                    {prop.amount}
-                  </TableCell>
-                  {tableHead.length - (prop.colspan - 0 + 2) > 0 ? (
-                    <TableCell
-                      className={classes.tableCell}
-                      colSpan={tableHead.length - (prop.colspan - 0 + 2)}
-                    />
-                  ) : null}
-                </SelectedRow>
-              );
-            }
-            if (prop.purchase) {
-              return (
-                <SelectedRow key={key} hover={hover} className={tableRowClasses}>
-                  <TableCell
-                    className={classes.tableCell}
-                    colSpan={prop.colspan}
-                  />
-                  <TableCell
-                    className={classes.tableCell + " " + classes.tableCellTotal}
-                  >
-                    Total
-                  </TableCell>
-                  <TableCell
-                    className={
-                      classes.tableCell + " " + classes.tableCellAmount
-                    }
-                  >
-                    {prop.amount}
-                  </TableCell>
-                  <TableCell
-                    className={classes.tableCell + " " + classes.right}
-                    colSpan={prop.col.colspan}
-                  >
-                    {prop.col.text}
-                  </TableCell>
-                </SelectedRow>
-              );
-            }
-
-            return (
-              <SelectedRow
-                key={key}
-                hover={hover}
-                className={classes.tableRow + " " + tableRowClasses}
-                collapsedChildren={prop[prop.length - 1]}
-              >
-                {(collapsibleRows ? prop.slice(0, -1) : prop).map((prop, key) => {
+    <TableContext.Provider value={{ collapseAllRows, setCollapseAllRows }}>
+      <div className={classes.tableResponsive}>
+        <Table className={classes.table}>
+          {tableHead !== undefined ? (
+            <TableHead className={classes[tableHeaderColor]}>
+              <TableRow className={classes.tableRow}>
+                {collapsibleRows && <TableCell />}
+                {tableHead.map((prop, key) => {
                   const tableCellClasses =
+                    classes.tableHeadCell +
+                    " " +
                     classes.tableCell +
                     " " +
                     cx({
-                      [classes[colorsColls[coloredColls.indexOf(key)]]]:
-                        coloredColls.indexOf(key) !== -1,
-                      [customCellClasses[customClassesForCells.indexOf(key)]]:
-                        customClassesForCells.indexOf(key) !== -1,
+                      [customHeadCellClasses[
+                        customHeadClassesForCells.indexOf(key)
+                      ]]: customHeadClassesForCells.indexOf(key) !== -1,
+                      [classes.tableShoppingHead]: tableShopping,
                     });
                   return (
                     <TableCell className={tableCellClasses} key={key}>
@@ -195,14 +117,117 @@ export default function CustomTable(props) {
                     </TableCell>
                   );
                 })}
-              </SelectedRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </div>
+              </TableRow>
+            </TableHead>
+          ) : null}
+          <TableBody>
+            {tableData.map((prop, key) => {
+              var rowColor = "";
+              var rowColored = false;
+              if (prop.color !== undefined) {
+                rowColor = prop.color;
+                rowColored = true;
+                prop = prop.data;
+              }
+              const tableRowClasses = cx({
+                [classes.tableRowHover]: hover,
+                [classes[rowColor + "Row"]]: rowColored,
+                [classes.tableStripedRow]: striped && key % 2 === 0,
+              });
+
+              const SelectedRow = collapsibleRows ? CollapsibleRow : TableRow
+
+              if (prop.total) {
+                return (
+                  <SelectedRow key={key} hover={hover} className={tableRowClasses}>
+                    <TableCell
+                      className={classes.tableCell}
+                      colSpan={prop.colspan}
+                    />
+                    <TableCell
+                      className={classes.tableCell + " " + classes.tableCellTotal}
+                    >
+                      Total
+                    </TableCell>
+                    <TableCell
+                      className={
+                        classes.tableCell + " " + classes.tableCellAmount
+                      }
+                    >
+                      {prop.amount}
+                    </TableCell>
+                    {tableHead.length - (prop.colspan - 0 + 2) > 0 ? (
+                      <TableCell
+                        className={classes.tableCell}
+                        colSpan={tableHead.length - (prop.colspan - 0 + 2)}
+                      />
+                    ) : null}
+                  </SelectedRow>
+                );
+              }
+              if (prop.purchase) {
+                return (
+                  <SelectedRow key={key} hover={hover} className={tableRowClasses}>
+                    <TableCell
+                      className={classes.tableCell}
+                      colSpan={prop.colspan}
+                    />
+                    <TableCell
+                      className={classes.tableCell + " " + classes.tableCellTotal}
+                    >
+                      Total
+                    </TableCell>
+                    <TableCell
+                      className={
+                        classes.tableCell + " " + classes.tableCellAmount
+                      }
+                    >
+                      {prop.amount}
+                    </TableCell>
+                    <TableCell
+                      className={classes.tableCell + " " + classes.right}
+                      colSpan={prop.col.colspan}
+                    >
+                      {prop.col.text}
+                    </TableCell>
+                  </SelectedRow>
+                );
+              }
+
+              return (
+                <SelectedRow
+                  key={key}
+                  hover={hover}
+                  className={classes.tableRow + " " + tableRowClasses}
+                  collapsedChildren={prop[prop.length - 1]}
+
+                >
+                  {(collapsibleRows ? prop.slice(0, -1) : prop).map((prop, key) => {
+                    const tableCellClasses =
+                      classes.tableCell +
+                      " " +
+                      cx({
+                        [classes[colorsColls[coloredColls.indexOf(key)]]]:
+                          coloredColls.indexOf(key) !== -1,
+                        [customCellClasses[customClassesForCells.indexOf(key)]]:
+                          customClassesForCells.indexOf(key) !== -1,
+                      });
+                    return (
+                      <TableCell className={tableCellClasses} key={key}>
+                        {prop}
+                      </TableCell>
+                    );
+                  })}
+                </SelectedRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </div>
+    </TableContext.Provider>
   );
 }
+
 
 CustomTable.defaultProps = {
   tableHeaderColor: "gray",

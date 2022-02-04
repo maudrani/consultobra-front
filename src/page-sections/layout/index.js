@@ -7,9 +7,11 @@ import { layoutStates, restoreLayout, setAppLayout } from './states';
 
 import PageHeader from 'components/Header';
 import PageFooter from 'src/components/footer'
+import Alert from 'components/alert';
+
 
 const PageLayout = ({ children }) => {
-    const { header, footer } = useSnapshot(layoutStates)
+    const { header, footer, alert } = useSnapshot(layoutStates)
     const Router = useRouter()
 
     useEffect(() => {
@@ -20,6 +22,8 @@ const PageLayout = ({ children }) => {
 
 
     return (<>
+       <Alert {...alert}>{alert.content}</Alert>
+
         {header.show && <PageHeader fixed={header.fixed} />}
 
         {children}

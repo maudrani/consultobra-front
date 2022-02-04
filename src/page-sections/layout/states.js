@@ -9,12 +9,16 @@ export const layoutStates = proxy({
         show: true,
         showSocialMedia: true,
     },
-    errorMessage: {
+    alert: {
         show: false,
-        color: '',
-        message: '',
+        variant: 'danger',
+        content: 'Content is empty',
     }
 })
+
+export const restoreAlert = () => {
+    layoutStates.alert.show = false
+}
 
 export const restoreHeader = () => {
     layoutStates.header.show = true
@@ -29,6 +33,7 @@ export const restoreFooter = () => {
 export const restoreLayout = () => {
     restoreHeader()
     restoreFooter()
+    restoreAlert()
 }
 
 export const setAppLayout = () => {
